@@ -17,7 +17,8 @@ defmodule Recaptcha.Http.MockClient do
      %{
        "success" => true,
        "challenge_ts" => "timestamp",
-       "hostname" => "localhost"
+       "hostname" => "localhost",
+       "score" => 0.5
      }}
   end
 

@@ -6,11 +6,11 @@ defmodule RecaptchaTest do
 
   test "When the supplied g-recaptcha-response is invalid, multiple errors are returned" do
     assert {:error, messages} = Recaptcha.verify("not_valid")
-    assert messages == [:invalid_input_response, :invalid_input_secret]
+    assert messages == [:invalid_input_secret]
   end
 
   test "When a valid response is supplied, a success response is returned" do
-    assert {:ok, %{challenge_ts: _, hostname: _}} =
+    assert {:ok, %{challenge_ts: _, hostname: _, score: _}} =
              Recaptcha.verify("valid_response", secret: @google_test_secret)
   end
 
