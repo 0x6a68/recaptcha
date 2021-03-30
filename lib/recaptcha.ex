@@ -6,9 +6,9 @@ defmodule Recaptcha do
     for more details.
   """
 
-  alias Recaptcha.{Config, Http, Response}
+  alias Recaptcha.{Config, Response}
 
-  @http_client Application.get_env(:recaptcha, :http_client, Http)
+  @http_client Application.compile_env!(:recaptcha, :http_client)
 
   @doc """
   Verifies a reCAPTCHA response string.

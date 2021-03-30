@@ -11,7 +11,7 @@ defmodule Recaptcha.Mixfile do
       package: package(),
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
-
+      elixirc_paths: elixirc_paths(Mix.env()),
       # Test coverage:
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
@@ -30,7 +30,9 @@ defmodule Recaptcha.Mixfile do
   end
 
   def application do
-    [applications: [:logger, :httpoison, :eex]]
+    [
+      extra_applications: [:logger, :httpoison, :eex]
+    ]
   end
 
   defp description do
@@ -40,6 +42,9 @@ defmodule Recaptcha.Mixfile do
     """
   end
 
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
+
   defp deps do
     [
       {:httpoison, ">= 0.12.0"},
@@ -47,7 +52,9 @@ defmodule Recaptcha.Mixfile do
       {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
       {:ex_doc, ">= 0.0.0", only: :dev},
       {:dialyxir, "~> 0.5", only: [:dev]},
-      {:excoveralls, "~> 0.7.1", only: :test}
+      {:excoveralls, "~> 0.7.1", only: :test},
+      {:mox, "~> 1.0", only: [:test]},
+      {:bypass, "~> 2.1.0", only: [:test]}
     ]
   end
 
