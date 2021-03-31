@@ -4,6 +4,7 @@ defmodule Recaptcha.Http do
   """
 
   alias Recaptcha.Config
+  @behaviour Recaptcha.Http.Interface
 
   @headers [
     {"Content-type", "application/x-www-form-urlencoded"},
@@ -35,8 +36,7 @@ defmodule Recaptcha.Http do
       remote_ip: "remote_ip"
     })
   """
-  @spec request_verification(binary, timeout: integer) ::
-          {:ok, map} | {:error, [atom]}
+  @impl true
   def request_verification(body, options \\ []) do
     timeout = options[:timeout] || Config.get_env(:recaptcha, :timeout, 5000)
     url = Config.get_env(:recaptcha, :verify_url, @default_verify_url)
@@ -54,7 +54,7 @@ defmodule Recaptcha.Http do
       {:ok, data} -> {:ok, data}
       {:error, :invalid} -> {:error, [:invalid_api_response]}
       {:error, {:invalid, _reason}} -> {:error, [:invalid_api_response]}
-      {:error, %{reason: reason}} -> {:error, [reason]}
+      {:error, %{"error-codes" => error_codes}} -> {:error, error_codes}
     end
   end
 end
