@@ -1,5 +1,6 @@
-<%= if @options[:size] == "invisible" do %>
 <script src="https://www.google.com/recaptcha/api.js?<%= @options[:onload] %>hl=<%= @options[:hl] %>" async defer></script>
+
+<%= if @options[:size] == "invisible" do %>
 <script type="text/javascript">
   var form = null;
 
@@ -40,6 +41,7 @@
 </div>
 
 <%= if @options[:noscript] do %>
+
   <noscript>
     <div style="width: 302px; height: 422px;">
       <div style="width: 302px; height: 422px; position: relative;">
@@ -61,4 +63,5 @@
       </div>
     </div>
   </noscript>
+
 <% end %>
